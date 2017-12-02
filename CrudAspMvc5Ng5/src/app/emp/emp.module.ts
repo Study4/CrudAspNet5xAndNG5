@@ -2,7 +2,8 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EmpComponent } from './emp.component';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { EmpService } from './emp.service';
 
 // 第三方套件
 import { AlertModule } from 'ngx-bootstrap';
@@ -11,10 +12,12 @@ import { AlertModule } from 'ngx-bootstrap';
     imports: [
         CommonModule,
         FormsModule,
-        HttpModule,
+        HttpClientModule,
     ],
     declarations: [EmpComponent],
     providers: [
+        EmpService,
+
         { provide: 'components', useValue: [EmpComponent], multi: true }
     ],
     entryComponents: [EmpComponent]

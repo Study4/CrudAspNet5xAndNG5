@@ -4,13 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes, provideRoutes  } from '@angular/router';
 
-// 元件
-//import { AppComponent } from './app.component';
-//import { EmpComponent } from './emp/emp.component';
-//import { DetailComponent } from './emp/detail.component';
-//import { AboutComponent } from './about/about.component';
-
-
 // 共用服務
 import { EmpService } from './emp/emp.service';
 
@@ -53,12 +46,7 @@ const routes: Routes = [
         //    },
         //], { useHash: true })
     ],
-    declarations: [
-    //    AppComponent,
-    //    EmpComponent,
-    //    AboutComponent,
-    //    DetailComponent
-    ],
+    declarations: [],
     providers: [
         //provideRoutes(routes),
         SystemJsNgModuleLoader,

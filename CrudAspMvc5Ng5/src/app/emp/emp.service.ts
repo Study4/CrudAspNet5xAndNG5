@@ -1,33 +1,82 @@
 ﻿import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { Emp } from './emp';
+
+
+const httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable()
 export class EmpService {
 
-    private heroesUrl = '/api/emps';
+    private empUrl = '/api/emps';
 
-    constructor(private http: Http) { }
+    constructor(
+        private http: HttpClient) { }
 
-    getAll(): Promise<Emp[]> {
-        return this.http.get(`${this.heroesUrl}`)
-            .toPromise()
-            .then(response => response.json() as Emp[])
-            .catch(this.handleError);
-    } // stub
+    getAll(): Observable<Emp[]> {
+        return this.http.get<Emp[]>(this.empUrl)
+            .pipe(
+            catchError(this.handleError('getEmps', []))
+            );
+    }
 
-    get(id: number): Promise<Emp> {
-        return this.http.get(`${this.heroesUrl}/${id}`)
-            .toPromise()
-            .then(response => response.json() as Emp[])
-        .catch(this.handleError);
-    } // stub
+    get(id: number): Observable<Emp> {
+        const url = `${this.empUrl}/${id}`;
+        return this.http.get<Emp>(url).pipe(
+            catchError(this.handleError<Emp>(`getEmp id=${id}`))
+        );
+    }
 
-    private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); // for demo purposes only
-        return Promise.reject(error.message || error);
-      }
+    add(emp: Emp): Observable<Emp> {
+        return this.http.post<Emp>(this.empUrl, emp, httpOptions).pipe(
+            catchError(this.handleError<Emp>('addEmp'))
+        );
+    }
+
+    update(emp: Emp): Observable<any> {
+        const url = `${this.empUrl}/${emp.id}`;
+        return this.http.put(url, emp, httpOptions).pipe(
+            catchError(this.handleError<any>('updateEmp'))
+        );
+    }
+
+    delete(emp: Emp | number): Observable<Emp> {
+        const id = typeof emp === 'number' ? emp : emp.id;
+        const url = `${this.empUrl}/${id}`;
+        return this.http.delete<Emp>(url, httpOptions).pipe(
+            catchError(this.handleError<Emp>('deleteEmp'))
+        );
+    }
+
+
+    /**
+     * Handle Http operation that failed.
+     * Let the app continue.
+     * @param operation - name of the operation that failed
+     * @param result - optional value to return as the observable result
+     */
+    private handleError<T>(operation = 'operation', result?: T) {
+        return (error: any): Observable<T> => {
+
+            // TODO: send the error to remote logging infrastructure
+            console.error(error); // log to console instead
+
+            // TODO: better job of transforming error for user consumption
+            //this.log(`${operation} failed: ${error.message}`);
+
+            // Let the app keep running by returning an empty result.
+            return of(result as T);
+        };
+    }
+
+    //private log(message: string) {
+    //    this.messageService.add('HeroService: ' + message);
+    //}
 }
