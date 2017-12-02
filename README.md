@@ -4,10 +4,10 @@ ASP.NET MVC 5.X and Angular 5 , Use MPA
 ASP.NET MVC 5.X 整合 Angular 5 , 使用 MPA 架構
 
 ## 執行
-1.使用 VS 2017 run IIS Express
-2.執行 ng server --proxy-config proxy.config.json 
-3.瀏覽 http://localhost:4200/home/index
-4.瀏覽 http://localohst:4200/home/about
+1. 使用 VS 2017 run IIS Express
+2. 執行 ng server --proxy-config proxy.config.json 
+3. 瀏覽 http://localhost:4200/home/index
+4. 瀏覽 http://localohst:4200/home/about
 
 index 和 about 由伺服器渲染
 
