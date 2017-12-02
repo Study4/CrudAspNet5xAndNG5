@@ -13,9 +13,7 @@ index 和 about 由伺服器渲染
 
 ## Issue
 1. MVC 首頁會使用到 Angular Index.html
-2. 目前只時做查詢
-3. 未使用 RX 模式
-4. 部分尚未優化
+2. 部分尚未優化
 
 ## 特別感謝
 
